@@ -1,5 +1,9 @@
 const contProducts = document.getElementById('container');
 const modal = document.getElementById('modal');
+const itemsInCart = document.getElementById('itemsNum');
+const cartLabel = document.querySelector('.cartContainer');
+const cItems = document.querySelector('.mBody');
+
 let cartItems = [];
 
 class Product {
@@ -73,8 +77,50 @@ function addToCart(addItem) {
         cartItems.push(addItem);
     }
     console.log(cartItems);
+    showCart();
 }
 
+function showCart() {
+    cleanCart();
+
+    cartItems.forEach((item) => {
+        const {image, name, price, quantity, subtotal, id} = item;
+
+        const rowItem = document.createElement('div');
+        rowItem.classList.add('cartItemRow');
+        rowItem.innerHTML = `
+                                <img src="${image}" width="100">
+                                <p>${name}</p>
+                                <p>${price}</p>
+                                <p>${quantity}</p>
+                                <p>${subtotal}</p>
+                                <a href="#" class="deleteItem" id="${id}">[ x ]</a>
+                            `;
+        cItems.appendChild(rowItem);
+    });
+    itemNumber();
+}
+
+function itemNumber() {
+    let counter;
+
+    if (cartItems.length > 0) {
+        cartLabel.style.display = 'flex';
+        cartLabel.style.alignItems = 'center';
+        itemsInCart.style.display = 'flex';
+        counter = cartItems.reduce((number, item) => number + item.quantity, 0);
+        itemsInCart.innerText = `${counter}`;        
+    } else {
+        cartLabel.style.display = 'block';
+        itemsInCart.style.display = 'none';
+    }
+}
+
+function cleanCart() {
+    while (cItems.firstChild) {
+        cItems.removeChild(cItems.firstChild);        
+    }
+}
 
 const renderProducts = () => {
     products.forEach((product) => {
@@ -90,3 +136,18 @@ const renderProducts = () => {
                         contProducts.append(itemCard);
     })  
 };
+
+
+
+
+// function openCart() {
+//     modal.style.display = 'block';
+// }
+// function closeCart() {
+//     modal.style.display = 'none';
+// }
+// const cartButton = document.getElementById('cart');
+// cartButton.addEventListener('click', openCart())
+
+// const closeButton = document.getElementById('close');
+// closeButton.addEventListener('click', closeCart())

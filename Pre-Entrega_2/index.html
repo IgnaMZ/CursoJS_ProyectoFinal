@@ -16,7 +16,12 @@
         <ul class="nav-menu">
             <li class="menu-item"><a href="#home">Autos</a></li>
             <li class="menu-item"><a href="#cars">Nosotros</a></li>
-            <li class="menu-item"><a href="#cart">Carrito</a></li>
+            <li id="cart" class="menu-item">
+                <div class="cartContainer">
+                    <a href="#cart">Carrito</a>
+                    <span id="itemsNum" class="itemsNum">0</span>
+                </div>
+            </li>
         </ul>
     </div>
 
@@ -25,8 +30,8 @@
         <!-- Modal content -->
         <div class="mContent">
             <div class="mHeader">
-                <span class="close">CERRAR</span>
                 <h2>Carrito de Compras</h2>
+                <a id="close" class="close" href="#">[ x ]</a>
             </div>
             <div class="mBody"></div>
             <div class="mFooter">
@@ -38,6 +43,6 @@
     </div>
 
     <div id="container" class="container"></div>
-    
+
 </body>
 </html>
