@@ -5,74 +5,39 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pre-Entrega2</title>
-    <script src="/js/products.js" defer></script>
-    <script src="/js/script.js" defer></script>
-    <link rel="stylesheet" href="/css/styles.css">
+    <script src="./js/products.js" defer></script>
+    <script src="./js/script.js" defer></script>
+    <link rel="stylesheet" href="./css/styles.css">
 </head>
 
 <body>
     <div class="nav-bar">
         <h1>minuevoauto.com</h1>
         <ul class="nav-menu">
-            <li class="menu-item"><a href="#home">Home</a></li>
-            <li class="menu-item"><a href="#cars">Autos</a></li>
+            <li class="menu-item"><a href="#home">Autos</a></li>
+            <li class="menu-item"><a href="#cars">Nosotros</a></li>
             <li class="menu-item"><a href="#cart">Carrito</a></li>
         </ul>
     </div>
-    <div id="container" class="container">
-        <!-- <article class="card">
-            <img class="product-pic" src="./img/peugeot-3008.jpg"/>
-            <h4>Peugeot 3008</h4>
-            <p>$18.000.000</p>
-            <a id="1" class="add-to-cart" href="#">AGREGAR AL CARRITO</a>
-        </article>
-        <article class="card">
-            <img class="product-pic" src="./img/chevrolet-sonic-2015.jpg"/>
-            <h4>Peugeot 3008</h4>
-            <p>$18.000.000</p>
-            <a id="2" class="add-to-cart" href="#">AGREGAR AL CARRITO</a>
-        </article><article class="card">
-            <img class="product-pic" src="./img/citroen-c4-cactus.jpg"/>
-            <h4>Peugeot 3008</h4>
-            <p>$18.000.000</p>
-            <a id="3" class="add-to-cart" href="#">AGREGAR AL CARRITO</a>
-        </article>
-        <article class="card">
-            <img class="product-pic" src="./img/ford-focus-2017.jpg"/>
-            <h4>Peugeot 3008</h4>
-            <p>$18.000.000</p>
-            <a id="4" class="add-to-cart" href="#">AGREGAR AL CARRITO</a>
-        </article>
-        <article class="card">
-            <img class="product-pic" src="./img/honda-civic-2018.jpg"/>
-            <h4>Peugeot 3008</h4>
-            <p>$18.000.000</p>
-            <a id="5" class="add-to-cart" href="#">AGREGAR AL CARRITO</a>
-        </article>
-        <article class="card">
-            <img class="product-pic" src="./img/nissan-sentra-2020.jpg"/>
-            <h4>Peugeot 3008</h4>
-            <p>$18.000.000</p>
-            <a id="6" class="add-to-cart" href="#">AGREGAR AL CARRITO</a>
-        </article>
-        <article class="card">
-            <img class="product-pic" src="./img/renault-captur-rs.jpg"/>
-            <h4>Peugeot 3008</h4>
-            <p>$18.000.000</p>
-            <a id="7" class="add-to-cart" href="#">AGREGAR AL CARRITO</a>
-        </article>
-        <article class="card">
-            <img class="product-pic" src="./img/toyota-corolla-2020.jpg"/>
-            <h4>Peugeot 3008</h4>
-            <p>$18.000.000</p>
-            <a id="8" class="add-to-cart" href="#">AGREGAR AL CARRITO</a>
-        </article>
-        <article class="card">
-            <img class="product-pic" src="./img/vw-golf-2019.jpg"/>
-            <h4>Peugeot 3008</h4>
-            <p>$18.000.000</p>
-            <a id="9" class="add-to-cart" href="#">AGREGAR AL CARRITO</a>
-        </article> -->
+
+    <!-- Cart modal -->
+    <div id="modal" class="modal">
+        <!-- Modal content -->
+        <div class="mContent">
+            <div class="mHeader">
+                <span class="close">CERRAR</span>
+                <h2>Carrito de Compras</h2>
+            </div>
+            <div class="mBody"></div>
+            <div class="mFooter">
+                <h3 id="total"></h3>
+                <a id="endPurchase" class="mButton" href="#">Finalizar compra</a>
+                <a id="emptyCart" class="mButton" href="#">Vaciar carrito</a>
+            </div>
+        </div>
     </div>
+
+    <div id="container" class="container"></div>
+    
 </body>
 </html>
