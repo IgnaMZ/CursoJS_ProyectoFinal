@@ -3,6 +3,12 @@ const modal = document.getElementById('modal');
 const itemsInCart = document.getElementById('itemsNum');
 const cartLabel = document.querySelector('.cartContainer');
 const cItems = document.querySelector('.mBody');
+const totalPrice = document.getElementById('total');
+const cartButton = document.getElementById('cart');
+
+
+const closeButton = document.getElementById('close');
+
 
 let cartItems = [];
 
@@ -25,9 +31,35 @@ triggerEvents();
 function triggerEvents() {
     document.addEventListener('DOMContentLoaded', () => {
         renderProducts();
+        getLocalStorageCart()
+        showCart();
     });
 
     contProducts.addEventListener('click', addItem);
+    cItems.addEventListener('click', deleteItem);
+    cartButton.addEventListener('click', openCart)
+    closeButton.addEventListener('click', closeCart)
+
+    function openCart() {
+        modal.style.display = 'block';
+    }
+    function closeCart() {
+        modal.style.display = 'none';
+    }
+}
+
+function getLocalStorageCart() {
+    cartItems = JSON.parse(localStorage.getItem('localItems')) || [];    
+} 
+
+function deleteItem(item) { 
+    if (item.target.classList.contains('deleteItem')) {
+        const itemId = parseInt(item.target.getAttribute('id'));
+        // console.log(itemId);
+        cartItems = cartItems.filter((item) => item.id !== itemId);
+        saveLocal();
+        showCart();
+    }
 }
 
 function addItem(item) {
@@ -77,7 +109,13 @@ function addToCart(addItem) {
         cartItems.push(addItem);
     }
     console.log(cartItems);
+    // Guardamos los productos del carrito en localStorage.
+    saveLocal();
     showCart();
+}
+
+function saveLocal() {
+    localStorage.setItem('localItems', JSON.stringify(cartItems));    
 }
 
 function showCart() {
@@ -99,6 +137,12 @@ function showCart() {
         cItems.appendChild(rowItem);
     });
     itemNumber();
+    calcularTotal();
+}
+
+function calcularTotal() {
+    let total = cartItems.reduce((totalPrice, item) => totalPrice + item.subtotal, 0);
+    totalPrice.innerHTML = `Total a pagar: $ ${total} `;
 }
 
 function itemNumber() {
@@ -140,14 +184,4 @@ const renderProducts = () => {
 
 
 
-// function openCart() {
-//     modal.style.display = 'block';
-// }
-// function closeCart() {
-//     modal.style.display = 'none';
-// }
-// const cartButton = document.getElementById('cart');
-// cartButton.addEventListener('click', openCart())
 
-// const closeButton = document.getElementById('close');
-// closeButton.addEventListener('click', closeCart())
