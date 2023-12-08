@@ -1,0 +1,57 @@
+[
+    {
+        "id": 1,
+        "name": "VW Golf GTI",
+        "price": 20500000,
+        "img": "vw-golf-2022.jpg"
+    },
+    {
+        "id": 2,
+        "name": "Toyota Corolla | Mod. 2020",
+        "price": 18550000,
+        "img": "toyota-corolla-2020.jpg"
+    },
+    {
+        "id": 3,
+        "name": "Ford Focus | Mod. 2017",
+        "price": 9600000,
+        "img": "ford-focus-2017.jpg"
+    },
+    {
+        "id": 4,
+        "name": "Nissan Sentra | Mod. 2023",
+        "price": 16800000,
+        "img": "nissan-sentra-2020.jpg"
+    },
+    {
+        "id": 5,
+        "name": "Renault Captur | Mod. 2020",
+        "price": 15770000,
+        "img": "renault-captur-rs.jpg"
+    },
+    {
+        "id": 6,
+        "name": "Peugeot 3008 | Mod. 2017",
+        "price": 16800000,
+        "img": "peugeot-3008.jpg"
+    },
+    {
+        "id": 7,
+        "name": "Citröen C4 Cactus | Mod. 2019",
+        "price": 11000000,
+        "img": "citroen-c4-cactus.jpg"
+    },
+    {
+        "id": 8,
+        "name": "Chevrolet Sonic | Mod. 2015",
+        "price": 8000000,
+        "img": "chevrolet-sonic-2015.jpg"
+    },
+    {
+        "id": 9,
+        "name": "Honda Civic | Mod. 2018",
+        "price": 10500000,
+        "img": "honda-civic-2018.jpg"
+    }
+    
+]
