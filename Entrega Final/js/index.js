@@ -1,3 +1,5 @@
+// const url = 'https://raw.githubusercontent.com/IgnaMZ/info-and-data/main/products.json?token=GHSAT0AAAAAACLLO3SHSGDZUBIJ72THJARCZLY35MA';
+const file = './data/products.json';
 const contProducts = document.getElementById('container');
 const modal = document.getElementById('modal');
 const itemsInCart = document.getElementById('itemsNum');
@@ -166,20 +168,40 @@ function cleanCart() {
     }
 }
 
-const renderProducts = () => {
+async function renderProducts() {
+    // const products = await makeRequest(url);
+    const products = await makeRequest(file);
+    
     products.forEach((product) => {
         const itemCard = document.createElement('article');
         itemCard.classList.add('card');
         itemCard.innerHTML = `
                         <img src="./img/${product.img}" alt="${product.name}"/>
-                        <h4>${product.name}</h4>
-                        <p>$${product.price}</p>
+                        <h4 class ="p-name">${product.name}</h4>
+                        <p class="p-price">$${product.price}</p>
                         <a id="${product.id}" class="add-to-cart" href="#">AGREGAR AL CARRITO</a>
                         `;
 
                         contProducts.append(itemCard);
     })  
 };
+
+async function makeRequest(info) {
+    try {
+        const response = await fetch(info);
+        if (!response.ok) {
+            throw new Error(`Error en la petición: ${response.status} ${response.statusText}`)            
+        }
+        const data = await response.json();
+        return data;
+
+    } catch (error) {
+        console.log(error);        
+    }
+    // finally {
+    //     console.log('La petición ha finalizado.')
+    // }
+}
 
 
 
