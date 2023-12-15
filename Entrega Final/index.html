@@ -5,8 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pre-Entrega2</title>
-    <!-- <script src="./js/products.js" defer></script> -->
-    <script src="./js/index.js" defer></script>
+    
     <link rel="stylesheet" href="./css/styles.css">
 </head>
 
@@ -23,6 +22,11 @@
                 </div>
             </li>
         </ul>
+        <div class="filter-box">
+            <input type="text" id="filter" class="filter" placeholder="Definir criterio de filtrado de autos...">
+            <a id="btnFilter" class="add-to-cart">FILTRAR</a>
+            
+        </div>
     </div>
 
     <!-- Cart modal -->
@@ -31,18 +35,21 @@
         <div class="mContent">
             <div class="mHeader">
                 <h2>Carrito de Compras</h2>
-                <a id="close" class="close" href="#">[ x ]</a>
+                <a id="close" class="close" href="#">[x]</a>
             </div>
             <div class="mBody"></div>
             <div class="mFooter">
                 <h3 id="total"></h3>
-                <a id="endPurchase" class="mButton" href="#">Finalizar compra</a>
-                <a id="emptyCart" class="mButton" href="#">Vaciar carrito</a>
+                <a id="end-purchase" class="mButton" href="#">Finalizar compra</a>
+                <a id="empty-cart" class="mButton" href="#">Vaciar carrito</a>
             </div>
         </div>
     </div>
 
     <div id="container" class="container"></div>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.all.min.js"></script>
+    <!-- <script src="./js/products.js" defer></script> -->
+    <script src="./js/index.js" defer></script>
 </body>
 </html>

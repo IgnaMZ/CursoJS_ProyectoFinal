@@ -7,10 +7,21 @@ const cartLabel = document.querySelector('.cartContainer');
 const cItems = document.querySelector('.mBody');
 const totalPrice = document.getElementById('total');
 const cartButton = document.getElementById('cart');
-
-
+const filterImput = document.getElementById('filter');
+const filterBtn = document.getElementById('btnFilter');
+const endPurchase = document.getElementById('end-purchase');
+const emptyCart = document.getElementById('empty-cart');
 const closeButton = document.getElementById('close');
 
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'bottom-end',
+    showConfirmButton: false,
+    width: 300,
+    color: 'whitesmoke',
+    timer: 3000,
+    timerProgresBar: true,
+});
 
 let cartItems = [];
 
@@ -39,14 +50,128 @@ function triggerEvents() {
 
     contProducts.addEventListener('click', addItem);
     cItems.addEventListener('click', deleteItem);
-    cartButton.addEventListener('click', openCart)
-    closeButton.addEventListener('click', closeCart)
+    cartButton.addEventListener('click', openCart);
+    closeButton.addEventListener('click', closeCart);
+    filterBtn.addEventListener('click', filterProducts);
+    endPurchase.addEventListener('click', purchaseCompleted);
+    emptyCart.addEventListener('click', resetCart);
+    
+}
 
-    function openCart() {
-        modal.style.display = 'block';
+function openCart() {
+    modal.style.display = 'block';
+}
+function closeCart() {
+    modal.style.display = 'none';
+}
+
+function toastAlert(icon, title, bgColor){
+    Toast.fire({
+        icon: icon,
+        title: title,
+        background: bgColor,
+    });
+}
+
+function purchaseCompleted(){
+    Swal.fire({
+        icon: 'success',
+        title: 'Compra finalizada',
+        text: 'Su compra ha sido realizada con éxito',
+        timerProgresBar: 'true',
+        timer: 5000
+    });
+
+    resetCartLS();
+    getLocalStorageCart()
+    showCart();
+    closeCart();    
+}
+
+//Elimina los productos del carrito.
+function resetCart(){
+    Swal.fire({
+        title: 'Limpiar carrito',
+        text: '¿Realmente desea eliminar todos los productos del carrito?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Aceptar',
+        cancelButtonText: 'Cancelar',
+    }).then((btnResponse) => {
+        if (btnResponse.isConfirmed) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Vaciando Carrito',
+                text: 'Su carrito de compras ha sido vaciado con éxito',
+                timerProgresBar: 'true',
+                timer: 5000
+            });
+            resetCartLS();
+            getLocalStorageCart()
+            showCart();
+            closeCart();
+
+        } else {
+            Swal.fire({
+                icon: 'info',
+                title: 'Compra cancelada',
+                text: 'Su compra ha sido cancelada con éxito',
+                timerProgresBar: 'true',
+                timer: 5000
+            });
+        }      
+    }) 
+}
+
+// Eliminamos los productos en Local Stoarge.
+function resetCartLS(){
+    localStorage.removeItem('localItems');
+}
+
+async function filterProducts(){
+    const products = await makeRequest(file);
+    let filteredProducts, filter;
+
+    filter = filterImput.value.toLowerCase();
+
+    filteredProducts = products.filter((product) => product.name.toLowerCase().includes(filter));
+
+    if(filteredProducts.length > 0){
+        cleanUpContainer()
+        arrayReview(filteredProducts);
+
+    } else {
+        Swal.fire({
+            icon: 'info',
+            title: 'Sin resultados',
+            text: '¡Upps! No hemos encontrado autos para tu búsqueda.',
+            confirmButtonText: 'OK',
+        });
+        console.log('¡Upps! No hemos encontrado autos para tu búsqueda.');
+
+        cleanUpContainer();
+        arrayReview(products);
     }
-    function closeCart() {
-        modal.style.display = 'none';
+}
+
+function arrayReview(array){
+    array.forEach((product) => {
+        const itemCard = document.createElement('article');
+        itemCard.classList.add('card');
+        itemCard.innerHTML = `
+                        <img src="./img/${product.img}" alt="${product.name}"/>
+                        <h4 class ="p-name">${product.name}</h4>
+                        <p class="p-price">$${product.price}</p>
+                        <a id="${product.id}" class="add-to-cart" href="#">AGREGAR AL CARRITO</a>
+                        `;
+
+                        contProducts.append(itemCard);
+    });
+}
+
+function cleanUpContainer(){
+    while (container.firstChild) {
+        container.removeChild(container.firstChild);
     }
 }
 
@@ -58,6 +183,8 @@ function deleteItem(item) {
     if (item.target.classList.contains('deleteItem')) {
         const itemId = parseInt(item.target.getAttribute('id'));
         // console.log(itemId);
+
+        toastAlert('error','Producto eliminado del carrito.', '#ff3333');
         cartItems = cartItems.filter((item) => item.id !== itemId);
         saveLocal();
         showCart();
@@ -65,11 +192,12 @@ function deleteItem(item) {
 }
 
 function addItem(item) {
-    //console.log('Se hizo click en la aplicación');
     item.preventDefault();
     if (item.target.classList.contains('add-to-cart')) {
         const addedItem = item.target.parentElement;
         //console.log(addedItem);
+
+        toastAlert('success','Producto agregado al carrito.', '#5f9ea0');
         showItemInfo(addedItem);
     }
 }
@@ -134,7 +262,7 @@ function showCart() {
                                 <p>${price}</p>
                                 <p>${quantity}</p>
                                 <p>${subtotal}</p>
-                                <a href="#" class="deleteItem" id="${id}">[ x ]</a>
+                                <a href="#" class="deleteItem" id="${id}">[x]</a>
                             `;
         cItems.appendChild(rowItem);
     });
@@ -171,19 +299,7 @@ function cleanCart() {
 async function renderProducts() {
     // const products = await makeRequest(url);
     const products = await makeRequest(file);
-    
-    products.forEach((product) => {
-        const itemCard = document.createElement('article');
-        itemCard.classList.add('card');
-        itemCard.innerHTML = `
-                        <img src="./img/${product.img}" alt="${product.name}"/>
-                        <h4 class ="p-name">${product.name}</h4>
-                        <p class="p-price">$${product.price}</p>
-                        <a id="${product.id}" class="add-to-cart" href="#">AGREGAR AL CARRITO</a>
-                        `;
-
-                        contProducts.append(itemCard);
-    })  
+    arrayReview(products);  
 };
 
 async function makeRequest(info) {
